@@ -8,6 +8,9 @@ use App\Http\Controllers\API\Cars\CarFuelTypeController;
 use App\Http\Controllers\API\Cars\CarInteriorColorController;
 use App\Http\Controllers\API\Cars\CarMarkController;
 use App\Http\Controllers\API\Cars\CarModelController;
+use App\Http\Controllers\API\Cars\CarSeatsController;
+use App\Http\Controllers\API\Cars\CarStickerController;
+use App\Http\Controllers\API\Cars\CarTransmissionController;
 use App\Http\Controllers\API\Cars\CarTypeController;
 use App\Http\Controllers\API\Cars\CarYearController;
 use App\Http\Controllers\API\LoginController;
@@ -41,5 +44,8 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::resource('drive/types', CarDriveTypeController::class);
         Route::resource('interior/colors', CarInteriorColorController::class);
         Route::resource('exterior/colors', CarExteriorColorController::class);
+        Route::resource('transmission', CarTransmissionController::class);
+        Route::resource('seats', CarSeatsController::class);
+        Route::resource('stickers', CarStickerController::class);
     });
 });
