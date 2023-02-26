@@ -2,7 +2,6 @@
 
 namespace App\Http\Transformers\Cars;
 
-use App\Models\CarSeat;
 use App\Models\CarSticker;
 use League\Fractal\TransformerAbstract;
 

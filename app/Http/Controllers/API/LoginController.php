@@ -14,10 +14,14 @@ class LoginController extends BaseController
             $user = Auth::user();
             $user->token = $user->createToken('Cars')->plainTextToken;
 
-            return $this->item($user, new AuthTransformer());
-        }
-        else{
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return response()->json([
+                'message'=>'Authorized Successfully!',
+                'token' => $user->token,
+            ]);
+        } else {
+            return response()->json([
+                'Unauthorised'=>'Unauthorised!',
+            ], 401);
         }
     }
 }

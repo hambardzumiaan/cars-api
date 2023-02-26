@@ -26,10 +26,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::controller(LoginController::class)->group(function(){
-    Route::post('login', 'login');
-});
+Route::post('login', [LoginController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group( function () {
@@ -46,6 +43,6 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::resource('exterior/colors', CarExteriorColorController::class);
         Route::resource('transmission', CarTransmissionController::class);
         Route::resource('seats', CarSeatsController::class);
-        Route::resource('stickers', CarStickerController::class);
+        Route::resource('stickers', CarStickerController::class);// -
     });
 });

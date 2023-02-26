@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarYearRequest;
 use App\Http\Services\CarYearService;
 use App\Http\Transformers\Cars\CarYearTransformer;
+use App\Models\CarYear;
 use Illuminate\Support\Facades\Log;
 
 class CarYearController extends BaseController
@@ -60,7 +61,13 @@ class CarYearController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carYear = CarYear::find($id);
+
+            return $this->item($carYear, new CarYearTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

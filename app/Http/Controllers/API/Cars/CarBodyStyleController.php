@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarBodyStyleRequest;
 use App\Http\Services\CarBodyStyleService;
 use App\Http\Transformers\Cars\CarBodyStyleTransformer;
+use App\Models\CarBodyStyle;
 use Illuminate\Support\Facades\Log;
 
 class CarBodyStyleController extends BaseController
@@ -60,7 +61,13 @@ class CarBodyStyleController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $bodyStyle = CarBodyStyle::find($id);
+
+            return $this->item($bodyStyle, new CarBodyStyleTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

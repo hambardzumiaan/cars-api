@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API\Cars;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarStickerRequest;
 use App\Http\Services\CarStickerService;
-use App\Http\Transformers\Cars\CarSeatTransformer;
 use App\Http\Transformers\Cars\CarStickerTransformer;
+use App\Models\CarSticker;
 use Illuminate\Support\Facades\Log;
 
 class CarStickerController extends BaseController
@@ -47,7 +47,7 @@ class CarStickerController extends BaseController
             $carType = $this->carStickerService->store($data);
             Log::info('----End CarStickerController:store----');
 
-            return $this->item($carType, new CarSeatTransformer());
+            return $this->item($carType, new CarStickerTransformer());
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -61,7 +61,13 @@ class CarStickerController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carSticker = CarSticker::find($id);
+
+            return $this->item($carSticker, new CarStickerTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

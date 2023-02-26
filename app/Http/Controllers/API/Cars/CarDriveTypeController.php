@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API\Cars;
 
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\Http\Requests\CarDriveTypeRequest;
 use App\Http\Requests\CarTypeRequest;
 use App\Http\Services\CarDriveTypeService;
 use App\Http\Transformers\Cars\CarDriveTypeTransformer;
 use App\Http\Transformers\Cars\CarTypeTransformer;
+use App\Models\CarDriveType;
 use Illuminate\Support\Facades\Log;
 
 class CarDriveTypeController extends BaseController
@@ -61,7 +63,13 @@ class CarDriveTypeController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carDriveType = CarDriveType::find($id);
+
+            return $this->item($carDriveType, new CarDriveTypeTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

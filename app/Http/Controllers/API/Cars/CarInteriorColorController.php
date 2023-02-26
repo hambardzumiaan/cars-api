@@ -61,7 +61,13 @@ class CarInteriorColorController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carInteriorColor = CarInteriorColor::find($id);
+
+            return $this->item($carInteriorColor, new CarInteriorColorTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -71,7 +77,7 @@ class CarInteriorColorController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CarInteriorColor $request, $id)
+    public function update(CarInteriorColorRequest $request, $id)
     {
         try {
             $data = $request->all();

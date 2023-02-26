@@ -7,7 +7,7 @@ use League\Fractal\TransformerAbstract;
 
 class CarTypeTransformer extends TransformerAbstract
 {
-    public function transform(CarType $carType)
+    public function transform($carType)
     {
         return [
             'id' => $carType->id,

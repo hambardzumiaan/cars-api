@@ -12,6 +12,7 @@ use App\Http\Services\CarEngineService;
 use App\Http\Services\CarTypeService;
 use App\Http\Transformers\Cars\CarEngineTransformer;
 use App\Http\Transformers\Cars\CarTypeTransformer;
+use App\Models\CarEngine;
 use App\Models\CarType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -68,7 +69,13 @@ class CarEngineController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carEngine = CarEngine::find($id);
+
+            return $this->item($carEngine, new CarEngineTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

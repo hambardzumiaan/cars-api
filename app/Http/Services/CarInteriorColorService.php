@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\CarInteriorColor;
+use Illuminate\Support\Facades\Log;
 
 class CarInteriorColorService
 {

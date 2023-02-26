@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarTransmissionRequest;
 use App\Http\Services\CarTransmissionService;
 use App\Http\Transformers\Cars\CarTransmissionTransformer;
+use App\Models\CarTransmission;
 use Illuminate\Support\Facades\Log;
 
 class CarTransmissionController extends BaseController
@@ -60,7 +61,13 @@ class CarTransmissionController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carTransmission = CarTransmission::find($id);
+
+            return $this->item($carTransmission, new CarTransmissionTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

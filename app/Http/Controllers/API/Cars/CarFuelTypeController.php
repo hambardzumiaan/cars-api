@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarTypeRequest;
 use App\Http\Services\CarFuelTypeService;
 use App\Http\Transformers\Cars\CarFuelTypeTransformer;
+use App\Models\CarFuelType;
 use Illuminate\Support\Facades\Log;
 
 class CarFuelTypeController extends BaseController
@@ -60,7 +61,13 @@ class CarFuelTypeController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $fuelType = CarFuelType::find($id);
+
+            return $this->item($fuelType, new CarFuelTypeTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

@@ -65,7 +65,13 @@ class CarTypeController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carType = CarType::find($id);
+
+            return $this->item($carType, new CarTypeTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

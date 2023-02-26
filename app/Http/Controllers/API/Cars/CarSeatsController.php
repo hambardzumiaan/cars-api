@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarSeatRequest;
 use App\Http\Services\CarSeatService;
 use App\Http\Transformers\Cars\CarSeatTransformer;
+use App\Models\CarSeat;
 use Illuminate\Support\Facades\Log;
 
 class CarSeatsController extends BaseController
@@ -60,7 +61,13 @@ class CarSeatsController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carSeat = CarSeat::find($id);
+
+            return $this->item($carSeat, new CarSeatTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

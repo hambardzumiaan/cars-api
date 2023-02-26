@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Validator;
 use App\Http\Requests\CarMarkRequest;
 use App\Http\Services\CarMarkService;
 use App\Http\Transformers\Cars\CarMarkTransformer;
+use App\Models\CarMark;
 use Illuminate\Support\Facades\Log;
 
 class CarMarkController extends BaseController
@@ -63,7 +64,13 @@ class CarMarkController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $mark = CarMark::find($id);
+
+            return $this->item($mark, new CarMarkTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

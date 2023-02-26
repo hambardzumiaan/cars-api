@@ -6,6 +6,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarExteriorColorRequest;
 use App\Http\Services\CarExteriorColorService;
 use App\Http\Transformers\Cars\CarExteriorColorTransformer;
+use App\Models\CarExteriorColor;
 use Illuminate\Support\Facades\Log;
 
 class CarExteriorColorController extends BaseController
@@ -60,7 +61,13 @@ class CarExteriorColorController extends BaseController
      */
     public function show($id)
     {
-        // Todo
+        try {
+            $carExteriorColor = CarExteriorColor::find($id);
+
+            return $this->item($carExteriorColor, new CarExteriorColorTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
