@@ -109,4 +109,14 @@ class CarCard extends Model
     {
         return $this->hasMany(CarGeneralPhoto::class);
     }
+
+    public function beforeRenovationPhotos()
+    {
+        return $this->hasMany(CarBeforeRenovationPhoto::class);
+    }
+
+    public function afterRenovationPhotos()
+    {
+        return $this->hasMany(CarAfterRenovationPhoto::class);
+    }
 }

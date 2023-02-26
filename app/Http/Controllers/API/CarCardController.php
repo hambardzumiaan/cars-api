@@ -4,8 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarCardRequest;
+use App\Http\Requests\CarDeleteImageRequest;
 use App\Http\Services\CarCardService;
+use App\Http\Transformers\Cars\CarCardShowTransformer;
 use App\Http\Transformers\Cars\CarCardTransformer;
+use App\Models\CarAfterRenovationPhoto;
+use App\Models\CarBeforeRenovationPhoto;
+use App\Models\CarCard;
+use App\Models\CarGeneralPhoto;
 use App\Models\CarMark;
 use Illuminate\Support\Facades\Log;
 
@@ -48,7 +54,15 @@ class CarCardController extends BaseController
 
             Log::info('General Photo------');
             if (isset($data['general_photos'])) {
-                $this->carCardService->uploadGeneralPhotos($request->general_photos, $card->id);
+                $this->carCardService->uploadGeneralPhotos(CarGeneralPhoto::class, $data['general_photos'], $card->id, 'general');
+            }
+
+            if (isset($data['after_renovation_photos'])) {
+                $this->carCardService->uploadGeneralPhotos(CarAfterRenovationPhoto::class, $data['after_renovation_photos'], $card->id, 'afterRenovation');
+            }
+
+            if (isset($data['before_renovation_photos'])) {
+                $this->carCardService->uploadGeneralPhotos(CarBeforeRenovationPhoto::class, $data['before_renovation_photos'], $card->id, 'beforeRenovation');
             }
 
             Log::info('----End CarCardController:store----');
@@ -68,9 +82,11 @@ class CarCardController extends BaseController
     public function show($id)
     {
         try {
-            $card = CarMark::find($id);
+            Log::info('----Start CarCardController:show----');
+            $card = CarCard::find($id);
+            Log::info('----Start CarCardController:show----');
 
-            return $this->item($card, new CarCardTransformer());
+            return $this->item($card, new CarCardShowTransformer());
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -89,6 +105,18 @@ class CarCardController extends BaseController
             $data = $request->all();
             Log::info('----Start CarCardController:update----');
             $card = $this->carCardService->update($data, $id);
+
+            if (isset($data['general_photos'])) {
+                $this->carCardService->uploadGeneralPhotos(CarGeneralPhoto::class, $data['general_photos'], $card->id, 'general');
+            }
+
+            if (isset($data['after_renovation_photos'])) {
+                $this->carCardService->uploadGeneralPhotos(CarAfterRenovationPhoto::class, $data['after_renovation_photos'], $card->id, 'afterRenovation');
+            }
+
+            if (isset($data['before_renovation_photos'])) {
+                $this->carCardService->uploadGeneralPhotos(CarBeforeRenovationPhoto::class, $data['before_renovation_photos'], $card->id, 'beforeRenovation');
+            }
             Log::info('----End CarCardController:update----');
 
             return $this->item($card, new CarCardTransformer());
@@ -110,7 +138,35 @@ class CarCardController extends BaseController
             $this->carCardService->destroy($id);
             Log::info('----End CarCardController:destroy----');
 
-            return [];
+            return response('Deleted Car Card');
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * @param CarDeleteImageRequest $request
+     * @return string|void
+     */
+    public function deleteImage(CarDeleteImageRequest $request, $id)
+    {
+        try {
+            Log::info('----Start CarCardController:destroy----');
+            $name = $request->input('name');
+            switch ($name) {
+                case 'general':
+                    $this->carCardService->deletePhoto(CarGeneralPhoto::class, $id);
+                    break;
+                case 'before-renovation':
+                    $this->carCardService->deletePhoto(CarBeforeRenovationPhoto::class, $id);
+                    break;
+                case 'after-renovation':
+                    $this->carCardService->deletePhoto(CarAfterRenovationPhoto::class, $id);
+                    break;
+            }
+
+            Log::info('----End CarCardController:deleteImage----');
+            return response('Deleted Image');
         } catch (\Exception $e) {
             return $e->getMessage();
         }

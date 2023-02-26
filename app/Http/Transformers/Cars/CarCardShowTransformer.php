@@ -5,7 +5,7 @@ namespace App\Http\Transformers\Cars;
 use App\Models\CarCard;
 use League\Fractal\TransformerAbstract;
 
-class CarCardTransformer extends TransformerAbstract
+class CarCardShowTransformer extends TransformerAbstract
 {
     public function transform(CarCard $carCard)
     {
@@ -31,6 +31,9 @@ class CarCardTransformer extends TransformerAbstract
             'city' => $carCard->city,
             'hwy' => $carCard->hwy,
             'description' => $carCard->description,
+            'general_photos' => $carCard->generalPhotos,
+            'before_renovation_photos' => $carCard->beforeRenovationPhotos,
+            'after_renovation_photos' => $carCard->afterRenovationPhotos,
         ];
     }
 }
