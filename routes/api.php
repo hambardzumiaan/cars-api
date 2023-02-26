@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\CarCardController;
 use App\Http\Controllers\API\Cars\CarBodyStyleController;
 use App\Http\Controllers\API\Cars\CarDriveTypeController;
 use App\Http\Controllers\API\Cars\CarEngineController;
@@ -45,4 +46,6 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::resource('seats', CarSeatsController::class);
         Route::resource('stickers', CarStickerController::class);// -
     });
+
+    Route::resource('cars', CarCardController::class);
 });
