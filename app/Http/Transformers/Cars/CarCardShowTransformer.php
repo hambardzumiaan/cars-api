@@ -34,6 +34,9 @@ class CarCardShowTransformer extends TransformerAbstract
             'general_photos' => $carCard->generalPhotos,
             'before_renovation_photos' => $carCard->beforeRenovationPhotos,
             'after_renovation_photos' => $carCard->afterRenovationPhotos,
+            'video' => $carCard->video,
+            'view_360' => $carCard->view_360,
+            'view_360_image' => $carCard->view_360_image,
         ];
     }
 }

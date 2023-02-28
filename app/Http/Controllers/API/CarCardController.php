@@ -52,6 +52,10 @@ class CarCardController extends BaseController
             Log::info('----Start CarCardController:store----');
             $card = $this->carCardService->store($data);
 
+
+            if(isset($data['view_360'])) {
+                $this->carCardService->uploadView360($card, $data['view_360']);
+            }
             Log::info('General Photo------');
             if (isset($data['general_photos'])) {
                 $this->carCardService->uploadGeneralPhotos(CarGeneralPhoto::class, $data['general_photos'], $card->id, 'general');
@@ -105,6 +109,11 @@ class CarCardController extends BaseController
             $data = $request->all();
             Log::info('----Start CarCardController:update----');
             $card = $this->carCardService->update($data, $id);
+
+
+            if(isset($data['view_360'])) {
+                $this->carCardService->uploadView360($card, $data['view_360']);
+            }
 
             if (isset($data['general_photos'])) {
                 $this->carCardService->uploadGeneralPhotos(CarGeneralPhoto::class, $data['general_photos'], $card->id, 'general');

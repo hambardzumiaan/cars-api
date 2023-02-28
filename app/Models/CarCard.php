@@ -38,7 +38,16 @@ class CarCard extends Model
         'car_exterior_color_id',
         'car_seat_id',
         'description',
+        'video',
+        'view_360',
     ];
+
+    protected $appends = ['view_360_image'];
+
+    public function getView360ImageAttribute($view_360)
+    {
+        return env('API_URL') . '/' . $view_360;
+    }
 
     public function mark()
     {

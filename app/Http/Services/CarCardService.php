@@ -90,4 +90,31 @@ class CarCardService
         File::delete($photo->path);
         $photo->delete();
     }
+
+    public function uploadView360($card, $file)
+    {
+        $allowedfileExtension=['pdf','jpg','png'];
+        $extension = $file->getClientOriginalExtension();
+        $check = in_array($extension,$allowedfileExtension);
+        if($check) {
+            $media_ext = $file->getClientOriginalName();
+            $media_no_ext = pathinfo($media_ext, PATHINFO_FILENAME);
+            $filename = $media_no_ext . '-' . uniqid() . '.' . $extension;
+
+            $path = 'images/' . $card->id . '/view360';
+            if(!File::exists($path)) {
+                File::makeDirectory($path, 0755, true);
+            } else if (File::exists('images/' . $card->id)) {
+                File::deleteDirectory(public_path('images/' . $card->id));
+            }
+            $image_resize = Image::make($file->getRealPath());
+            $image_resize->resize(900, 600);
+            $imageFullPath = 'images/' . $card->id .'/view360' . '/' .$filename;
+            $image_resize->save(public_path($imageFullPath));
+            $card->view_360 = $imageFullPath;
+            $card->save();
+        } else {
+            return response()->json(['invalid_file_format'], 422);
+        }
+    }
 }

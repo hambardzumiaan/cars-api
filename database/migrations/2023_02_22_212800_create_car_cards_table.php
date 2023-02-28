@@ -36,6 +36,7 @@ class CreateCarCardsTable extends Migration
             $table->unsignedBigInteger('car_seat_id')->nullable();
             $table->longText('description')->nullable();
             $table->longText('video')->nullable();
+            $table->string('view_360')->nullable();
             $table->timestamps();
 
             $table->foreign('car_mark_id')->references('id')->on('car_marks');
