@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\CarCardRequest;
+use App\Http\Requests\CarCardUpdateRequest;
 use App\Http\Requests\CarDeleteImageRequest;
 use App\Http\Services\CarCardService;
 use App\Http\Transformers\Cars\CarCardShowTransformer;
@@ -13,6 +14,8 @@ use App\Models\CarBeforeRenovationPhoto;
 use App\Models\CarCard;
 use App\Models\CarGeneralPhoto;
 use App\Models\CarMark;
+use Dflydev\DotAccessData\Data;
+use http\Env\Request;
 use Illuminate\Support\Facades\Log;
 
 class CarCardController extends BaseController
@@ -103,10 +106,11 @@ class CarCardController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CarCardRequest $request, $id)
+    public function update(CarCardUpdateRequest $request, $id)
     {
         try {
             $data = $request->all();
+            Log::info('$request->file' . json_encode($data));
             Log::info('----Start CarCardController:update----');
             $card = $this->carCardService->update($data, $id);
 
@@ -128,7 +132,7 @@ class CarCardController extends BaseController
             }
             Log::info('----End CarCardController:update----');
 
-            return $this->item($card, new CarCardTransformer());
+            return $this->item($card, new CarCardShowTransformer());
         } catch (\Exception $e) {
             return $e->getMessage();
         }

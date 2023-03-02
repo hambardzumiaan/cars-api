@@ -2,14 +2,16 @@
 
 namespace App\Http\Requests;
 
+use App\Models\CarCard;
+
 class CarCardRequest extends GeneralRequest
 {
-    public function rules() {
+    public function rules(CarCard $carCard) {
         return [
             'car_mark_id' => 'required|exists:car_marks,id',
             'car_model_id' => 'required|exists:car_models,id',
             'car_year_id' => 'required|exists:car_years,id',
-            'vin' => 'nullable|unique:car_cards,vin',
+            'vin' => 'nullable|unique:car_cards,vin,' . $this->id,
             'car_body_style_id' => 'nullable|exists:car_body_styles,id',
             'car_sticker_id' => 'nullable|exists:car_stickers,id',
             'car_engine_id' => 'nullable|exists:car_engines,id',

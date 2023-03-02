@@ -6,7 +6,7 @@ use League\Fractal\Serializer\ArraySerializer;
 
 class GlobalDataSerializer extends ArraySerializer
 {
-    public function collection($resourceKey, array $data)
+    public function collection($resourceKey, array $data) :array
     {
         if ($resourceKey) {
             return [$resourceKey => $data];
@@ -15,7 +15,7 @@ class GlobalDataSerializer extends ArraySerializer
         return $data;
     }
 
-    public function item($resourceKey, array $data)
+    public function item($resourceKey, array $data) :array
     {
         if ($resourceKey) {
             return [$resourceKey => $data];

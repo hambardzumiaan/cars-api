@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Models\CarCard;
 use App\Models\CarGeneralPhoto;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class CarCardService

@@ -22,8 +22,8 @@ class CarBeforeRenovationPhoto extends Model
 
     protected $appends = ['image'];
 
-    public function getImageAttribute($path)
+    public function getImageAttribute()
     {
-        return env('API_URL') . '/' . $path;
+        return env('API_URL') . '/' . $this->path;
     }
 }

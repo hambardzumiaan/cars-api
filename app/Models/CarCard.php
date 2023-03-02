@@ -18,6 +18,7 @@ class CarCard extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'car_mark_id',
         'car_model_id',
         'car_year_id',
@@ -44,9 +45,9 @@ class CarCard extends Model
 
     protected $appends = ['view_360_image'];
 
-    public function getView360ImageAttribute($view_360)
+    public function getView360ImageAttribute()
     {
-        return env('API_URL') . '/' . $view_360;
+        return env('API_URL') . '/' . $this->view_360;
     }
 
     public function mark()

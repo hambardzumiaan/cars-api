@@ -44,7 +44,7 @@ class CreateCarCardsTable extends Migration
             $table->foreign('car_year_id')->references('id')->on('car_years');
             $table->foreign('car_type_id')->references('id')->on('car_types');
             $table->foreign('car_body_style_id')->references('id')->on('car_body_styles');
-            $table->foreign('car_sticker_id')->references('id')->on('car_stickers');
+//            $table->foreign('car_sticker_id')->references('id')->on('car_stickers');
             $table->foreign('car_engine_id')->references('id')->on('car_engines');
             $table->foreign('car_fuel_type_id')->references('id')->on('car_fuel_types');
             $table->foreign('car_transmission_id')->references('id')->on('car_transmissions');

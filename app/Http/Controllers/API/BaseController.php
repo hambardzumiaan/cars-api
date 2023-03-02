@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller as ExtendedBaseController;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
-use League\Fractal\Serializer\JsonApiSerializer;
 
 class BaseController extends ExtendedBaseController
 {
