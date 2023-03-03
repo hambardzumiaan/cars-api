@@ -18,6 +18,8 @@ class CarGeneralPhoto extends Model
     protected $fillable = [
         'car_card_id',
         'path',
+        'row_index',
+        'active',
     ];
 
     protected $appends = ['image'];

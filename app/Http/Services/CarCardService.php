@@ -2,11 +2,14 @@
 
 namespace App\Http\Services;
 
+use App\Models\CarAfterRenovationPhoto;
+use App\Models\CarBeforeRenovationPhoto;
 use App\Models\CarCard;
 use App\Models\CarGeneralPhoto;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManagerStatic as Image;
+use function GuzzleHttp\json_decode;
 
 class CarCardService
 {
@@ -22,6 +25,42 @@ class CarCardService
     public function update($data, $id)
     {
         $card = CarCard::find($id);
+
+        if (isset($data["general_photos_ids"])) {
+            foreach (json_decode($data["general_photos_ids"], true) as $photoItem) {
+                $photo = CarGeneralPhoto::find($photoItem["id"]);
+
+                if(isset($photo)) {
+                    $photo->row_index = $photoItem["row_index"];
+                    $photo->active = $photoItem["active"];
+                    $photo->save();
+                }
+            }
+        }
+
+        if (isset($data["after_renovation_photos_ids"])) {
+            foreach (json_decode($data["after_renovation_photos_ids"], true) as $photoItem) {
+                $photo = CarAfterRenovationPhoto::find($photoItem["id"]);
+
+                if(isset($photo)) {
+                    $photo->row_index = $photoItem["row_index"];
+                    $photo->active = $photoItem["active"];
+                    $photo->save();
+                }
+            }
+        }
+
+        if (isset($data["before_renovation_photos_ids"])) {
+            foreach (json_decode($data["before_renovation_photos_ids"], true) as $photoItem) {
+                $photo = CarBeforeRenovationPhoto::find($photoItem["id"]);
+
+                if(isset($photo)) {
+                    $photo->row_index = $photoItem["row_index"];
+                    $photo->active = $photoItem["active"];
+                    $photo->save();
+                }
+            }
+        }
 
         if ($card) {
             $card->update($data);
@@ -72,6 +111,8 @@ class CarCardService
                 $image_resize->save(public_path($imageFullPath));
                 $model->path = $imageFullPath;
                 $model->car_card_id = $cardId;
+                $model->active = 0;
+                $model->row_index = count($model->get());
                 $model->save();
             } else {
                 return response()->json(['invalid_file_format'], 422);
