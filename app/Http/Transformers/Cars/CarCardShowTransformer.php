@@ -31,6 +31,7 @@ class CarCardShowTransformer extends TransformerAbstract
             'city' => $carCard->city,
             'hwy' => $carCard->hwy,
             'description' => $carCard->description,
+            'equipment' => $carCard->equipment,
             'general_photos' => $carCard->generalPhotos,
             'before_renovation_photos' => $carCard->beforeRenovationPhotos,
             'after_renovation_photos' => $carCard->afterRenovationPhotos,

@@ -39,6 +39,7 @@ class CarCard extends Model
         'car_exterior_color_id',
         'car_seat_id',
         'description',
+        'equipment',
         'video',
         'view_360',
     ];
