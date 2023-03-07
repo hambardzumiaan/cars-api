@@ -9,6 +9,7 @@ use App\Http\Requests\CarDeleteImageRequest;
 use App\Http\Services\CarCardService;
 use App\Http\Transformers\Cars\CarCardShowTransformer;
 use App\Http\Transformers\Cars\CarCardTransformer;
+use App\Http\Transformers\Cars\CarTransformer;
 use App\Models\CarAfterRenovationPhoto;
 use App\Models\CarBeforeRenovationPhoto;
 use App\Models\CarCard;
@@ -180,6 +181,19 @@ class CarCardController extends BaseController
 
             Log::info('----End CarCardController:deleteImage----');
             return response('Deleted Image');
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getCar($vin)
+    {
+        try {
+            Log::info('----Start CarCardController:getCar----');
+            $car = $this->carCardService->getByVin($vin);
+            Log::info('----End CarCardController:getCar----');
+
+            return $this->item($car, new CarTransformer());
         } catch (\Exception $e) {
             return $e->getMessage();
         }

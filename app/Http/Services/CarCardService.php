@@ -159,4 +159,15 @@ class CarCardService
             return response()->json(['invalid_file_format'], 422);
         }
     }
+
+    public function getByVin($vin)
+    {
+        $car = CarCard::where('vin', $vin)->first();
+
+        if (!$car) {
+            throw new \Exception('Car not found');
+        }
+
+        return $car;
+    }
 }
