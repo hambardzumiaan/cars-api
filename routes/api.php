@@ -14,6 +14,7 @@ use App\Http\Controllers\API\Cars\CarStickerController;
 use App\Http\Controllers\API\Cars\CarTransmissionController;
 use App\Http\Controllers\API\Cars\CarTypeController;
 use App\Http\Controllers\API\Cars\CarYearController;
+use App\Http\Controllers\API\Delivery\DeliveryController;
 use App\Http\Controllers\API\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,9 +45,10 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::resource('exterior/colors', CarExteriorColorController::class);
         Route::resource('transmission', CarTransmissionController::class);
         Route::resource('seats', CarSeatsController::class);
-        Route::resource('stickers', CarStickerController::class);// -
+        Route::resource('stickers', CarStickerController::class);
     });
 
+    Route::resource('delivery/plans', DeliveryController::class);
     Route::resource('cars', CarCardController::class);
     Route::post('cars/{id}', [CarCardController::class, 'update']);
     Route::post('delete/image/{id}', [CarCardController::class, 'deleteImage']);
