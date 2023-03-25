@@ -15,11 +15,11 @@ class CreateDeliveryPlansTable extends Migration
     {
         Schema::create('delivery_plans', function (Blueprint $table) {
             $table->id();
-            $table->integer('from');
-            $table->integer('to');
-            $table->integer('mile_price');
-            $table->integer('services_price');
-            $table->integer('additional_expenses');
+            $table->decimal('from');
+            $table->decimal('to');
+            $table->decimal('mile_price');
+            $table->decimal('services_price');
+            $table->decimal('additional_expenses');
             $table->timestamps();
         });
     }

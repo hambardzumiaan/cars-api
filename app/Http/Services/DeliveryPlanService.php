@@ -39,4 +39,20 @@ class DeliveryPlanService
             throw new \Exception('Delivery plan not found');
         }
     }
+
+    public function calculate($mile)
+    {
+        $plan = DeliveryPlan::where('from', '<=', $mile)->where('to', '>=', $mile)->first();
+
+        if (!$plan) {
+            throw new \Exception('Plan not found');
+        }
+
+        return $plan;
+    }
+
+    public function getTotal($mile, $milePrice, $servicePrice, $additionalExpenses)
+    {
+        return ($mile * $milePrice) + $servicePrice + $additionalExpenses;
+    }
 }

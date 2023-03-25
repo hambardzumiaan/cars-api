@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API\Delivery;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\DeliveryPlanRequest;
 use App\Http\Services\DeliveryPlanService;
+use App\Http\Transformers\Delivery\DeliveryCalculatePlanTransformer;
 use App\Http\Transformers\Delivery\DeliveryPlanTransformer;
 use App\Models\DeliveryPlan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class DeliveryController extends BaseController
@@ -105,6 +107,21 @@ class DeliveryController extends BaseController
             Log::info('----End DeliveryController:destroy----');
 
             return [];
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function calculate(Request $request)
+    {
+        try {
+            $mile = $request->input('mile');
+            Log::info('----Start DeliveryController:calculate----');
+            $plan = $this->deliveryPlanService->calculate($mile);
+            Log::info('----End DeliveryController:calculate----');
+            $plan->total = $this->deliveryPlanService->getTotal($mile, $plan->mile_price, $plan->services_price, $plan->additional_expenses);
+
+            return $this->item($plan, new DeliveryCalculatePlanTransformer());
         } catch (\Exception $e) {
             return $e->getMessage();
         }
