@@ -53,5 +53,8 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::resource('cars', CarCardController::class);
     Route::post('cars/{id}', [CarCardController::class, 'update']);
     Route::post('delete/image/{id}', [CarCardController::class, 'deleteImage']);
-    Route::get('car/{vin}', [CarCardController::class, 'getCar']);
 });
+
+
+Route::get('/inventory/cars', [CarCardController::class, 'inventoryCars']);
+Route::get('/car/{vin}', [CarCardController::class, 'getCar']);

@@ -30,7 +30,7 @@ class CarCardShowTransformer extends TransformerAbstract
             'show_on_page' => $carCard->show_on_page,
             'city' => $carCard->city,
             'hwy' => $carCard->hwy,
-            'description' => $carCard->description,
+            'description' => strip_tags(html_entity_decode($carCard->description)),
             'equipment' => $carCard->equipment,
             'general_photos' => $carCard->generalPhotos,
             'before_renovation_photos' => $carCard->beforeRenovationPhotos,

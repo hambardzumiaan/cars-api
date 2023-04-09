@@ -198,4 +198,17 @@ class CarCardController extends BaseController
             return $e->getMessage();
         }
     }
+
+    public function inventoryCars()
+    {
+        try {
+            Log::info('----Start CarCardController:inventoryCars----');
+            $cars = $this->carCardService->inventoryCars();
+            Log::info('----End CarCardController:inventoryCars----');
+
+            return $this->collection($cars, new CarTransformer());
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }

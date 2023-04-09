@@ -170,4 +170,8 @@ class CarCardService
 
         return $car;
     }
+
+    public function inventoryCars() {
+        return CarCard::paginate(8);
+    }
 }
